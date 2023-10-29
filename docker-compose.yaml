@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  django-app:
+    container_name: education_platform
+    build: ./education_platform
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: unless-stopped
+    volumes:
+      - ./education_platform:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./env_variables/education_platform.env
+    depends_on:
+      - postgres_db
+
+  flask-notifications:
+    container_name: flask_notif
+    build: ./notifications
+    command: flask --debug run --host=0.0.0.0
+    restart: unless-stopped
+    volumes:
+      - ./notifications:/app
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./env_variables/flask_notif.env
+    depends_on:
+      - notification_postgres_db
+      - django-app
+
+  flask_messenger:
+    container_name: flask_messenger
+    build: ./messenger
+    command: flask --debug run --host=0.0.0.0
+    restart: always
+    volumes:
+      - ./messenger:/app
+    ports:
+      - "5001:5000"
+    env_file:
+      - ./env_variables/flask_messenger.env
+    depends_on:
+      - messenger_postgres_db
+      - django-app
+
+  proxy:
+    image: nginx:mainline
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8888:80"
+    depends_on:
+      - django-app
+      - flask-notifications
+
+  postgres_db:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - ./env_variables/postgres_db.env
+    volumes:
+      - postgres_db_data:/var/lib/postgresql/data
+
+  notification_postgres_db:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - ./env_variables/notifications_postgres_db.env
+    volumes:
+      - notification_postgres_db_data:/var/lib/postgresql/data
+
+  messenger_postgres_db:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - ./env_variables/messenger_postgres_db.env
+    volumes:
+      - messenger_postgres_db_data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres_db_data:
+  notification_postgres_db_data:
+  messenger_postgres_db_data:
