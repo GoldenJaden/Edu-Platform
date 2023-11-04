@@ -38,7 +38,7 @@ jobs:
       with:
         context: ./notifications/
         file: ./notifications/Dockerfile
-        tags: goldenjaden/edu_flask_messenger:latest
+        tags: goldenjaden/edu_flask_notifications:latest
         push: true
 
     - name: Build and push flask messenger image
