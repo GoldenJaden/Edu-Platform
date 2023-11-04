@@ -28,23 +28,23 @@ jobs:
     - name: Build and push django image
       uses: docker/build-push-action@v5
       with:
-        context: ./education_platform
-        file: ./education_platform/Dockerfile
+        context: education_platform
+        file: education_platform/Dockerfile
         tags: goldenjaden/edu_django:latest
         push: true
 
     - name: Build and push flask notifications image
       uses: docker/build-push-action@v5
       with:
-        context: ./notifications
-        file: ./notifications/Dockerfile
+        context: notifications
+        file: notifications/Dockerfile
         tags: goldenjaden/edu_flask_messenger:latest
         push: true
 
     - name: Build and push flask messenger image
       uses: docker/build-push-action@v5
       with:
-        context: ./messenger
-        file: ./messenger/Dockerfile
+        context: messenger
+        file: messenger/Dockerfile
         tags: goldenjaden/edu_flask_messenger:latest
         push: true
