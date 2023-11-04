@@ -30,7 +30,7 @@ jobs:
       with:
         context: ./education_platform
         file: ./education_platform/Dockerfile
-        tags: goldenjaden/Edu_Django:latest
+        tags: goldenjaden/edu_django:latest
         push: true
 
     - name: Build and push flask notifications image
@@ -38,7 +38,7 @@ jobs:
       with:
         context: ./notifications
         file: ./notifications/Dockerfile
-        tags: goldenjaden/Edu_Flask_Messenger:latest
+        tags: goldenjaden/edu_flask_messenger:latest
         push: true
 
     - name: Build and push flask messenger image
@@ -46,5 +46,5 @@ jobs:
       with:
         context: ./messenger
         file: ./messenger/Dockerfile
-        tags: goldenjaden/Edu_Flask_Messenger:latest
+        tags: goldenjaden/edu_flask_messenger:latest
         push: true
