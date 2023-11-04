@@ -26,7 +26,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: "{{defaultContext}}:education_platform"
-        file: "{context}:education_platform/Dockerfile"
+        file: ./education_platform/Dockerfile
         tags: goldenjaden/edu_django:latest
         push: true
 
@@ -34,7 +34,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: "{{defaultContext}}:notifications"
-        file: "{context}:notifications/Dockerfile"
+        file: ./notifications/Dockerfile
         tags: goldenjaden/edu_flask_messenger:latest
         push: true
 
@@ -42,6 +42,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: "{{defaultContext}}:messenger"
-        file: "{context}:messenger/Dockerfile"
+        file: ./messenger/Dockerfile
         tags: goldenjaden/edu_flask_messenger:latest
         push: true
